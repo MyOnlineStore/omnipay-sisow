@@ -109,7 +109,7 @@ class PurchaseRequest extends AbstractRequest
             throw new InvalidRequestException("The issuer can only be '99' in testMode!");
         }
 
-        $data = array(
+        $data = [
             'shopid' => $this->getShopId(),
             'merchantid' => $this->getMerchantId(),
             'merchantkey' => $this->getMerchantKey(),
@@ -124,20 +124,21 @@ class PurchaseRequest extends AbstractRequest
             'returnurl' => $this->getReturnUrl(),
             'cancelurl' => $this->getCancelUrl(),
             'notifyurl' => $this->getNotifyUrl(),
+            'ipaddress' => $this->getClientIp(),
             'sha1' => $this->generateSignature(),
             'testmode' => $this->getTestMode(),
-        );
+        ];
 
         /** @var \Omnipay\Common\CreditCard $card */
         $card = $this->getCard();
         if ($card) {
-            if ($this->getPaymentMethod() == 'overboeking' || $this->getPaymentMethod() == 'klarna') {
+            if (\in_array($this->getPaymentMethod(), ['overboeking', 'klarna', 'afterpay'])) {
                 $data['billing_mail'] = $card->getEmail();
                 $data['billing_firstname'] = $card->getBillingFirstName();
                 $data['billing_lastname'] = $card->getBillingLastName();
             }
 
-            if ($this->getPaymentMethod() == 'klarna') {
+            if (\in_array($this->getPaymentMethod(), ['klarna', 'afterpay'])) {
                 $data['billing_company'] = $card->getBillingCompany();
                 $data['billing_address1'] = $card->getBillingAddress1();
                 $data['billing_address2'] = $card->getBillingAddress2();
@@ -145,20 +146,24 @@ class PurchaseRequest extends AbstractRequest
                 $data['billing_city'] = $card->getBillingCity();
                 $data['billing_country'] = $card->getBillingCountry();
                 $data['billing_phone'] = $card->getBillingPhone();
-                $data['birthdate'] = date('dmY', strtotime($card->getBirthday()));
+                $data['birthdate'] = $card->getBirthday('dmY');
+
                 if ($this->getMakeInvoice()) {
                     $data['makeinvoice'] = $this->getMakeInvoice();
                 }
                 if ($this->getMailInvoice()) {
                     $data['mailinvoice'] = $this->getMailInvoice();
                 }
+
                 $data['billing_countrycode'] = $this->getBillingCountrycode();
                 $data['shipping_countrycode'] = $this->getShippingCountrycode();
 
+                $data = array_merge($data, $this->getItemData());
+            }
+
+            if ('klarna' === $this->getPaymentMethod()) {
                 // only used for klarna account (required for klarna invoice as -1)
                 $data['pclass'] = - 1;
-
-                $data = array_merge($data, $this->getItemData());
             }
 
             $data['shipping_mail'] = $card->getEmail();
@@ -178,7 +183,7 @@ class PurchaseRequest extends AbstractRequest
 
     protected function getItemData()
     {
-        $data = array();
+        $data = [];
         $items = $this->getItems();
 
         if ($items) {
