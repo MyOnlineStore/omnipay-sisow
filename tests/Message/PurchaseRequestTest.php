@@ -29,6 +29,7 @@ class PurchaseRequestTest extends TestCase
         $this->request->setTransactionId('123');
         $this->request->setReturnUrl('http://localhost/return');
         $this->request->setNotifyUrl('http://localhost/notify');
+        $this->request->setClientIp('127.0.0.1');
     }
 
     public function testKlarna()
@@ -42,6 +43,27 @@ class PurchaseRequestTest extends TestCase
 
         $data = $this->request->getData();
 
+        self::assertSame('127.0.0.1', $data['ipaddress']);
+        $this->assertSame('true', $data['makeinvoice']);
+        $this->assertSame('true', $data['mailinvoice']);
+        $this->assertSame('nl', $data['billing_countrycode']);
+        $this->assertSame('nl', $data['shipping_countrycode']);
+
+        $this->assertSame('01022000', $data['birthdate']);
+    }
+
+    public function testAfterpay()
+    {
+        // setup klarna specific setters
+        $this->request->setPaymentMethod('afterpay');
+        $this->request->setMakeInvoice('true');
+        $this->request->setMailInvoice('true');
+        $this->request->setBillingCountrycode('nl');
+        $this->request->setShippingCountrycode('nl');
+
+        $data = $this->request->getData();
+
+        self::assertSame('127.0.0.1', $data['ipaddress']);
         $this->assertSame('true', $data['makeinvoice']);
         $this->assertSame('true', $data['mailinvoice']);
         $this->assertSame('nl', $data['billing_countrycode']);
