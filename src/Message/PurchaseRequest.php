@@ -3,7 +3,6 @@
 namespace Omnipay\Sisow\Message;
 
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Common\Http\ResponseParser;
 
 /**
  * Sisow Purchase Request
