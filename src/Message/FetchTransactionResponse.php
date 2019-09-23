@@ -41,4 +41,12 @@ class FetchTransactionResponse extends AbstractResponse
             (string) $this->data->transaction->trxid :
             null;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTransactionReference()
+    {
+        return $this->getTransactionId();
+    }
 }
