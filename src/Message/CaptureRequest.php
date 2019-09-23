@@ -19,7 +19,7 @@ class CaptureRequest extends AbstractRequest
      */
     protected function generateSignature()
     {
-        return sha1($this->getTransactionId() . $this->getMerchantId() . $this->getMerchantKey());
+        return sha1($this->getTransactionReference() . $this->getMerchantId() . $this->getMerchantKey());
     }
 
     /**
@@ -29,10 +29,10 @@ class CaptureRequest extends AbstractRequest
      */
     public function getData()
     {
-        $this->validate('transactionId', 'merchantId', 'merchantKey');
+        $this->validate('transactionReference', 'merchantId', 'merchantKey');
 
         return [
-            'trxid' => $this->getTransactionId(),
+            'trxid' => $this->getTransactionReference(),
             'merchantid' => $this->getMerchantId(),
             'sha1' => $this->generateSignature(),
         ];

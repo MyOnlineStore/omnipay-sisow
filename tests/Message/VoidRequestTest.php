@@ -16,7 +16,7 @@ class VoidRequestTest extends TestCase
         $this->request = new VoidRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->setMerchantId('123');
         $this->request->setMerchantKey('456');
-        $this->request->setTransactionId('789');
+        $this->request->setTransactionReference('789');
     }
 
     public function testGetData()

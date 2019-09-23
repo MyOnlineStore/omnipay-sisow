@@ -16,7 +16,7 @@ class FetchTransactionRequestTest extends TestCase
         $this->request = new FetchTransactionRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->setMerchantId('123');
         $this->request->setMerchantKey('456');
-        $this->request->setTransactionId('TEST080249721209');
+        $this->request->setTransactionReference('TEST080249721209');
     }
 
     public function testGetData()
@@ -40,7 +40,7 @@ class FetchTransactionRequestTest extends TestCase
         self::assertTrue($response->isSuccessful());
         self::assertSame('1000', $response->getAmount());
         self::assertSame('Success', $response->getStatus());
-        self::assertSame('TEST080249721209', $response->getTransactionId());
+        self::assertSame('TEST080249721209', $response->getTransactionReference());
     }
 
     public function testSendError()
@@ -52,6 +52,6 @@ class FetchTransactionRequestTest extends TestCase
         self::assertFalse($response->isSuccessful());
         self::assertNull($response->getAmount());
         self::assertNull($response->getStatus());
-        self::assertNull($response->getTransactionId());
+        self::assertNull($response->getTransactionReference());
     }
 }
