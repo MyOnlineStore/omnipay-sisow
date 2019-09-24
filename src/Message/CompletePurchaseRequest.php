@@ -2,9 +2,6 @@
 
 namespace Omnipay\Sisow\Message;
 
-use Omnipay\Common\Http\ResponseParser;
-use Psr\Http\Message\ResponseInterface;
-
 class CompletePurchaseRequest extends PurchaseRequest
 {
     protected $endpoint = 'https://www.sisow.nl/Sisow/iDeal/RestHandler.ashx/StatusRequest';

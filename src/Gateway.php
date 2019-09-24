@@ -3,6 +3,13 @@
 namespace Omnipay\Sisow;
 
 use Omnipay\Common\AbstractGateway;
+use Omnipay\Sisow\Message\AuthorizeRequest;
+use Omnipay\Sisow\Message\CaptureRequest;
+use Omnipay\Sisow\Message\CompleteAuthorizeRequest;
+use Omnipay\Sisow\Message\CreditRequest;
+use Omnipay\Sisow\Message\FetchTransactionRequest;
+use Omnipay\Sisow\Message\RefundRequest;
+use Omnipay\Sisow\Message\VoidRequest;
 
 /**
  * Sisow gateway.
@@ -104,5 +111,75 @@ class Gateway extends AbstractGateway
     public function completePurchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Sisow\Message\CompletePurchaseRequest', $parameters);
+    }
+
+    /**
+     * @param mixed[] $parameters
+     *
+     * @return AuthorizeRequest
+     */
+    public function authorize(array $parameters = [])
+    {
+        return $this->createRequest(AuthorizeRequest::class, $parameters);
+    }
+
+    /**
+     * @param mixed[] $parameters
+     *
+     * @return CompleteAuthorizeRequest
+     */
+    public function completeAuthorize(array $parameters = [])
+    {
+        return $this->createRequest(CompleteAuthorizeRequest::class, $parameters);
+    }
+
+    /**
+     * @param mixed[] $parameters
+     *
+     * @return CaptureRequest
+     */
+    public function capture(array $parameters = [])
+    {
+        return $this->createRequest(CaptureRequest::class, $parameters);
+    }
+
+    /**
+     * @param mixed[] $parameters
+     *
+     * @return VoidRequest
+     */
+    public function void(array $parameters = [])
+    {
+        return $this->createRequest(VoidRequest::class, $parameters);
+    }
+
+    /**
+     * @param mixed[] $parameters
+     *
+     * @return CreditRequest
+     */
+    public function credit(array $parameters = [])
+    {
+        return $this->createRequest(CreditRequest::class, $parameters);
+    }
+
+    /**
+     * @param mixed[] $parameters
+     *
+     * @return RefundRequest
+     */
+    public function refund(array $parameters = [])
+    {
+        return $this->createRequest(RefundRequest::class, $parameters);
+    }
+
+    /**
+     * @param mixed[] $parameters
+     *
+     * @return FetchTransactionRequest
+     */
+    public function fetchTransaction(array $parameters = [])
+    {
+        return $this->createRequest(FetchTransactionRequest::class, $parameters);
     }
 }
