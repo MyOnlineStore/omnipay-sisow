@@ -2,7 +2,9 @@
 
 namespace Omnipay\Sisow;
 
+use Omnipay\Sisow\Message\AuthorizeRequest;
 use Omnipay\Sisow\Message\CaptureRequest;
+use Omnipay\Sisow\Message\CompleteAuthorizeRequest;
 use Omnipay\Sisow\Message\CreditRequest;
 use Omnipay\Sisow\Message\FetchTransactionRequest;
 use Omnipay\Sisow\Message\RefundRequest;
@@ -65,6 +67,22 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertInstanceOf('Omnipay\Sisow\Message\CompletePurchaseRequest', $request);
         $this->assertSame('123456', $request->getTransactionId());
+    }
+
+    public function testAuthorize()
+    {
+        $request = $this->gateway->authorize(['transactionId' => '123456']);
+
+        self::assertInstanceOf(AuthorizeRequest::class, $request);
+        self::assertSame('123456', $request->getTransactionId());
+    }
+
+    public function testCompleteAuthorize()
+    {
+        $request = $this->gateway->completeAuthorize(['transactionId' => '123456']);
+
+        self::assertInstanceOf(CompleteAuthorizeRequest::class, $request);
+        self::assertSame('123456', $request->getTransactionId());
     }
 
     public function testCapture()
