@@ -78,10 +78,12 @@ class AuthorizeRequestTest extends TestCase
 
         $response = $this->request->send();
 
-        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
-        $this->assertEquals('https://www.sisow.nl/Sisow/iDeal/Simulator.aspx?merchantid=0123456&txid=TEST080494974182&sha1=ae6c5ca5daac1a3e907f0bb9014bf2c6c2caa0f2',
-            $response->getRedirectUrl());
+        $this->assertEquals(
+            'https://www.sisow.nl/Sisow/iDeal/Simulator.aspx?merchantid=0123456&txid=TEST080494974182&sha1=ae6c5ca5daac1a3e907f0bb9014bf2c6c2caa0f2',
+            $response->getRedirectUrl()
+        );
         $this->assertEquals('TEST080494974282', $response->getTransactionReference());
     }
 
@@ -91,10 +93,12 @@ class AuthorizeRequestTest extends TestCase
 
         $response = $this->request->send();
 
-        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
-        $this->assertEquals('https://www.sisow.nl/Sisow/iDeal/RestPay.aspx?id=80494974814&merchantid=0123456&sha1=b3dc1ac353e3983b3e9ba285de1b1f3d774fc8c9',
-            $response->getRedirectUrl());
+        $this->assertEquals(
+            'https://www.sisow.nl/Sisow/iDeal/RestPay.aspx?id=80494974814&merchantid=0123456&sha1=b3dc1ac353e3983b3e9ba285de1b1f3d774fc8c9',
+            $response->getRedirectUrl()
+        );
         $this->assertEquals(null, $response->getTransactionReference());
     }
 
