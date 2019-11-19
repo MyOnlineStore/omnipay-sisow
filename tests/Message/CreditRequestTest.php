@@ -31,6 +31,24 @@ class CreditRequestTest extends TestCase
         );
     }
 
+    public function testGetDataPartial()
+    {
+        $this->request->setAmountInteger(121);
+
+        self::assertSame(
+            [
+                'trxid' => '789',
+                'merchantid' => '123',
+                'sha1' => sha1('789123456'),
+                'amount' => 121,
+                'tax' => 2100,
+                'exclusive' => false,
+                'description' => 'Refund 1.21',
+            ],
+            $this->request->getData()
+        );
+    }
+
     public function testSendSuccess()
     {
         $this->setMockHttpResponse('CreditSuccess.txt');
