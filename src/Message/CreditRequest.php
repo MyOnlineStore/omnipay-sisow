@@ -37,7 +37,10 @@ class CreditRequest extends AbstractRequest
             'sha1' => $this->generateSignature(),
         ];
 
-        if (null !== $amount = $this->getAmountInteger()) {
+        // Only full refunds are supported with afterpay
+        if ('afterpay' !== $this->getPaymentMethod() &&
+            null !== $amount = $this->getAmountInteger()
+        ) {
             $data['amount'] = $amount;
             $data['tax'] = 2100;
             $data['exclusive'] = false;
