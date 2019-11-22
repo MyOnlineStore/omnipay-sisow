@@ -31,11 +31,23 @@ class CreditRequest extends AbstractRequest
     {
         $this->validate('transactionReference', 'merchantId', 'merchantKey');
 
-        return [
+        $data = [
             'trxid' => $this->getTransactionReference(),
             'merchantid' => $this->getMerchantId(),
             'sha1' => $this->generateSignature(),
         ];
+
+        // Only full refunds are supported with afterpay
+        if ('afterpay' !== $this->getPaymentMethod() &&
+            null !== $amount = $this->getAmountInteger()
+        ) {
+            $data['amount'] = $amount;
+            $data['tax'] = 2100;
+            $data['exclusive'] = false;
+            $data['description'] = \sprintf('Refund %01.2f', $amount / 100);
+        }
+
+        return $data;
     }
 
     /**
