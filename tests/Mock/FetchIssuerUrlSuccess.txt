@@ -1,0 +1,19 @@
+HTTP/1.1 200 OK
+Cache-Control: private
+Content-Type: text/xml; charset=utf-8
+Server: Microsoft-IIS/10.0
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Date: Mon, 04 May 2020 11:18:10 GMT
+Content-Length: 421
+
+<?xml version="1.0" encoding="UTF-8"?>
+<issuerurlresponse
+  xmlns="https://www.sisow.nl/Sisow/REST" version="1.0.0">
+  <transaction>
+    <issuerurl>https%3a%2f%2fwww.sisow.nl%2fSisow%2fportal%2fSimulator.aspx%3fmerchantid%3d1234%26txid%3d5678%26sha1%3d0987</issuerurl>
+  </transaction>
+  <signature>
+    <sha1>f0abd1d756ebbad7d9de28d6d84c38a85bd82720</sha1>
+  </signature>
+</issuerurlresponse>

@@ -6,6 +6,7 @@ use Omnipay\Sisow\Message\AuthorizeRequest;
 use Omnipay\Sisow\Message\CaptureRequest;
 use Omnipay\Sisow\Message\CompleteAuthorizeRequest;
 use Omnipay\Sisow\Message\CreditRequest;
+use Omnipay\Sisow\Message\FetchIssuerUrlRequest;
 use Omnipay\Sisow\Message\FetchTransactionRequest;
 use Omnipay\Sisow\Message\RefundRequest;
 use Omnipay\Sisow\Message\VoidRequest;
@@ -122,6 +123,14 @@ class GatewayTest extends GatewayTestCase
         $request = $this->gateway->fetchTransaction(['transactionId' => '123456']);
 
         self::assertInstanceOf(FetchTransactionRequest::class, $request);
+        self::assertSame('123456', $request->getTransactionId());
+    }
+
+    public function testFetchIssuerUrl()
+    {
+        $request = $this->gateway->fetchIssuerUrl(['transactionId' => '123456']);
+
+        self::assertInstanceOf(FetchIssuerUrlRequest::class, $request);
         self::assertSame('123456', $request->getTransactionId());
     }
 }

@@ -7,6 +7,7 @@ use Omnipay\Sisow\Message\AuthorizeRequest;
 use Omnipay\Sisow\Message\CaptureRequest;
 use Omnipay\Sisow\Message\CompleteAuthorizeRequest;
 use Omnipay\Sisow\Message\CreditRequest;
+use Omnipay\Sisow\Message\FetchIssuerUrlRequest;
 use Omnipay\Sisow\Message\FetchTransactionRequest;
 use Omnipay\Sisow\Message\RefundRequest;
 use Omnipay\Sisow\Message\VoidRequest;
@@ -181,5 +182,15 @@ class Gateway extends AbstractGateway
     public function fetchTransaction(array $parameters = [])
     {
         return $this->createRequest(FetchTransactionRequest::class, $parameters);
+    }
+
+    /**
+     * @param mixed[] $parameters
+     *
+     * @return FetchIssuerUrlRequest
+     */
+    public function fetchIssuerUrl(array $parameters = [])
+    {
+        return $this->createRequest(FetchIssuerUrlRequest::class, $parameters);
     }
 }
